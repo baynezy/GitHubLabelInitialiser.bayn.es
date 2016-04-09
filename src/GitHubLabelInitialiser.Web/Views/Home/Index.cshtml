@@ -1,7 +1,9 @@
-﻿@model GitHubLabelInitialiser.Web.Models.HomeIndexViewModel
+﻿@using GitHubLabelInitialiser.Web.Helpers
+@model GitHubLabelInitialiser.Web.Models.HomeIndexViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>@ViewBag.Title</h2>
+@Html.LoginButton(Model.ClientId, Model.RedirectUri.ToString(), Model.Scopes)
