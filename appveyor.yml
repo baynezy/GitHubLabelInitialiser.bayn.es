@@ -5,5 +5,5 @@ build:
 notifications:
   - provider: Slack
     auth_token:
-      secure: xLrYwFJVzehV+sdSJsDp52X1TSPeSGJrr56LI2GQDvrmkpjcrwX1rmPwdH+i14H8lijQDcWbUt9jl81saehgRA==
+      secure: pNtoiPCggdMOGNCtM2TqlUt1+RawC7BtMCvZsB8c3G89ON5a/UChY1T2jOah7IV7v5jFi/lQXJFUqI/LD99hRw==
     channel: '#build'
