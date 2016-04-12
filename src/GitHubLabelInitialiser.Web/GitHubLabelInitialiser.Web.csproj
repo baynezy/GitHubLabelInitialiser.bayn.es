@@ -122,7 +122,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Config.cs" />
     <Compile Include="Helpers\GitHubLoginHelperExtension.cs" />
+    <Compile Include="Helpers\IConfig.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Plumbing\ControllerInstaller.cs" />
     <Compile Include="Plumbing\WindsorControllerFactory.cs" />

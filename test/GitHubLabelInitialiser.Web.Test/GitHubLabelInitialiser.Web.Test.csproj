@@ -79,11 +79,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Helpers\ConfigTest.cs" />
     <Compile Include="Helpers\GitHubLoginHelperExtensionTest.cs" />
     <Compile Include="MvcHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
