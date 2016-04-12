@@ -6,7 +6,7 @@ namespace GitHubLabelInitialiser.Web.Helpers
 {
 	public static class GitHubLoginHelperExtension
 	{
-		private const string BaseUrl = "https://github.com/login/oauth/access_token";
+		private const string BaseUrl = "https://github.com/login/oauth/authorize";
 
 		public static MvcHtmlString LoginButton(this HtmlHelper htmlHelper, string clientId, string redirectUri = null, IList<string> scope = null)
 		{

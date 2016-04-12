@@ -45,7 +45,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			var result = controller.Index();
 			var model = (HomeIndexViewModel)result.Model;
 
-			Assert.That(model.ClientId, Is.EqualTo("qwerty"));
+			Assert.That(model.ClientId, Is.EqualTo("d84a8626442322ed91d0"));
 		}
 
 		[Test]
@@ -56,7 +56,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			var result = controller.Index();
 			var model = (HomeIndexViewModel)result.Model;
 
-			Assert.That(model.RedirectUri.ToString(), Is.EqualTo("http://localhost/callback/github/"));
+			Assert.That(model.RedirectUri.ToString(), Is.EqualTo("http://localhost:50038/callback/github"));
 		}
 
 		[Test]

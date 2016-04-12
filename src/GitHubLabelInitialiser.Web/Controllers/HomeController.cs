@@ -9,7 +9,7 @@ namespace GitHubLabelInitialiser.Web.Controllers
 	{
 		public ViewResult Index()
 		{
-			return View(new HomeIndexViewModel{ClientId = "qwerty", RedirectUri = new Uri("http://localhost/callback/github/"), Scopes = new List<string>{"public_repo"}});
+			return View(new HomeIndexViewModel { ClientId = "d84a8626442322ed91d0", RedirectUri = new Uri("http://localhost:50038/callback/github"), Scopes = new List<string> { "public_repo" } });
 		}
 	}
 }

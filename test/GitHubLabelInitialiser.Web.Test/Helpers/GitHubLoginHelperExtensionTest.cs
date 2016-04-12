@@ -15,7 +15,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 			var helper = MvcHelper.GetHtmlHelper();
 			var html = helper.LoginButton(clientId);
 			var expectedWithoutState = string.Format(
-					@"<a href=""https://github.com/login/oauth/access_token?client_id={0}"">Create account with GitHub</a>", clientId);
+					@"<a href=""https://github.com/login/oauth/authorize?client_id={0}"">Create account with GitHub</a>", clientId);
 			var stateRemoved = RemoveState(html.ToHtmlString());
 
 			Assert.That(stateRemoved, Is.EqualTo(expectedWithoutState));
@@ -30,7 +30,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 			var html = helper.LoginButton(clientId, redirectUri);
 			var expectedWithoutState =
 				string.Format(
-					@"<a href=""https://github.com/login/oauth/access_token?client_id={0}&amp;redirect_uri={1}"">Create account with GitHub</a>",
+					@"<a href=""https://github.com/login/oauth/authorize?client_id={0}&amp;redirect_uri={1}"">Create account with GitHub</a>",
 					clientId, redirectUri);
 			var stateRemoved = RemoveState(html.ToHtmlString());
 
@@ -47,7 +47,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 			var html = helper.LoginButton(clientId, redirectUri, scope);
 			var expectedWithoutState =
 				string.Format(
-					@"<a href=""https://github.com/login/oauth/access_token?client_id={0}&amp;redirect_uri={1}&amp;scope={2}"">Create account with GitHub</a>",
+					@"<a href=""https://github.com/login/oauth/authorize?client_id={0}&amp;redirect_uri={1}&amp;scope={2}"">Create account with GitHub</a>",
 					clientId, redirectUri, string.Join(",", scope));
 			var stateRemoved = RemoveState(html.ToHtmlString());
 
