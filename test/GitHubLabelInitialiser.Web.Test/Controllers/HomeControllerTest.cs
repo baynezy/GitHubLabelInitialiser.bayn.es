@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using GitHubLabelInitialiser.Web.Controllers;
+using GitHubLabelInitialiser.Web.Helpers;
 using GitHubLabelInitialiser.Web.Models;
+using Moq;
 using NUnit.Framework;
 
 namespace GitHubLabelInitialiser.Web.Test.Controllers
@@ -71,9 +73,19 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			Assert.That(model.Scopes, Is.EqualTo(expectedScopes));
 		}
 
-		private static HomeController CreateController()
+		private static HomeController CreateController(IConfig config = null)
 		{
-			return new HomeController();
+			return new HomeController(config ?? MockConfig());
+		}
+
+		private static IConfig MockConfig()
+		{
+			var config = new Mock<IConfig>();
+
+			config.Setup(m => m.GitHubClientId()).Returns("d84a8626442322ed91d0");
+			config.Setup(m => m.GitHubRedirectUrl()).Returns("http://localhost:50038/callback/github");
+
+			return config.Object;
 		}
 	}
 }

@@ -128,6 +128,7 @@
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Plumbing\ControllerInstaller.cs" />
     <Compile Include="Plumbing\WindsorControllerFactory.cs" />
+    <Compile Include="Plumbing\Wiring.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
