@@ -9,17 +9,19 @@ namespace GitHubLabelInitialiser.Web.Controllers
 	public class HomeController : Controller
 	{
 		private readonly IConfig _config;
+		private readonly IGitHubStateGenerator _gitHubStateGenerator;
 
-		public HomeController(IConfig config)
+		public HomeController(IConfig config, IGitHubStateGenerator gitHubStateGenerator)
 		{
 			_config = config;
+			_gitHubStateGenerator = gitHubStateGenerator;
 		}
 
 		public ViewResult Index()
 		{
 			var gitHubClientId = _config.GitHubClientId();
 			var githubRedirectUrl = _config.GitHubRedirectUrl();
-			return View(new HomeIndexViewModel { ClientId = gitHubClientId, RedirectUri = new Uri(githubRedirectUrl), Scopes = new List<string> { "public_repo" } });
+			return View(new HomeIndexViewModel { ClientId = gitHubClientId, RedirectUri = new Uri(githubRedirectUrl), Scopes = new List<string> { "public_repo" }, State = _gitHubStateGenerator.GenerateState()});
 		}
 	}
 }
