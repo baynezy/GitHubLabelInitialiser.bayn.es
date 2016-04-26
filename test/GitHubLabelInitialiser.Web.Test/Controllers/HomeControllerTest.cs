@@ -64,7 +64,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		[Test]
 		public void Index_WhenCalledWithNoParameters_ThenReturnViewResultWithScopesSet()
 		{
-			var expectedScopes = new List<string> {"public_repo"};
+			var expectedScopes = new List<string> { "public_repo" };
 			var controller = CreateController();
 
 			var result = controller.Index();
@@ -73,9 +73,25 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			Assert.That(model.Scopes, Is.EqualTo(expectedScopes));
 		}
 
-		private static HomeController CreateController(IConfig config = null)
+		[Test]
+		public void Index_WhenCalledWithNoParameters_ThenReturnViewResultWithStateSet()
 		{
-			return new HomeController(config ?? MockConfig());
+			const string expectedState = "qwerty12345678";
+			var gitHubStateGenerator = new Mock<IGitHubStateGenerator>();
+			gitHubStateGenerator.Setup(m => m.GenerateState()).Returns(expectedState);
+			var controller = CreateController(gitHubStateGenerator: gitHubStateGenerator.Object);
+
+			var result = controller.Index();
+			var model = (HomeIndexViewModel)result.Model;
+
+			Assert.That(model.State, Is.EqualTo(expectedState));
+		}
+
+		private static HomeController CreateController(IConfig config = null, IGitHubStateGenerator gitHubStateGenerator = null)
+		{
+			var mockGenerator = new Mock<IGitHubStateGenerator>();
+			mockGenerator.Setup(m => m.GenerateState()).Returns("wertyuijuytrewqyg");
+			return new HomeController(config ?? MockConfig(), gitHubStateGenerator ?? mockGenerator.Object);
 		}
 
 		private static IConfig MockConfig()

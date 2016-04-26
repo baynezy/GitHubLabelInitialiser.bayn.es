@@ -8,5 +8,6 @@ namespace GitHubLabelInitialiser.Web.Models
 		public string ClientId { get; set; }
 		public Uri RedirectUri { get; set; }
 		public IList<string> Scopes { get; set; }
+		public string State { get; set; }
 	}
 }

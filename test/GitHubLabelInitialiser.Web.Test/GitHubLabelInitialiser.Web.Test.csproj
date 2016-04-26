@@ -78,9 +78,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CallbackControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Helpers\ConfigTest.cs" />
     <Compile Include="Helpers\GitHubLoginHelperExtensionTest.cs" />
+    <Compile Include="Helpers\GitHubStateGeneratorTest.cs" />
     <Compile Include="MvcHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
