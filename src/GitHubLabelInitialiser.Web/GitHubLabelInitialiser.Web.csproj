@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Helpers\Config.cs" />
     <Compile Include="Helpers\GitHubLoginHelperExtension.cs" />
+    <Compile Include="Helpers\GitHubScope.cs" />
     <Compile Include="Helpers\GitHubStateGenerator.cs" />
     <Compile Include="Helpers\GitHubTokenType.cs" />
     <Compile Include="Helpers\IConfig.cs" />

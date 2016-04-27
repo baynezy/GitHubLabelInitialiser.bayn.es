@@ -21,7 +21,7 @@ namespace GitHubLabelInitialiser.Web.Controllers
 		{
 			var gitHubClientId = _config.GitHubClientId();
 			var githubRedirectUrl = _config.GitHubRedirectUrl();
-			return View(new HomeIndexViewModel { ClientId = gitHubClientId, RedirectUri = new Uri(githubRedirectUrl), Scopes = new List<string> { "public_repo" }, State = _gitHubStateGenerator.GenerateState()});
+			return View(new HomeIndexViewModel { ClientId = gitHubClientId, RedirectUri = new Uri(githubRedirectUrl), Scopes = new List<GitHubScope> { GitHubScope.PublicRepo }, State = _gitHubStateGenerator.GenerateState()});
 		}
 	}
 }

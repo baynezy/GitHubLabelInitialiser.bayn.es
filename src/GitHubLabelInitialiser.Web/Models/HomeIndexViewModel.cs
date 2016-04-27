@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GitHubLabelInitialiser.Web.Helpers;
 
 namespace GitHubLabelInitialiser.Web.Models
 {
@@ -7,7 +8,7 @@ namespace GitHubLabelInitialiser.Web.Models
 	{
 		public string ClientId { get; set; }
 		public Uri RedirectUri { get; set; }
-		public IList<string> Scopes { get; set; }
+		public IList<GitHubScope> Scopes { get; set; }
 		public string State { get; set; }
 	}
 }

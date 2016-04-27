@@ -7,7 +7,7 @@ namespace GitHubLabelInitialiser.Web.Models
 	{
 		public string AccessToken { get; set; }
 
-		public List<string> Scope { get; set; }
+		public IList<GitHubScope> Scope { get; set; }
 
 		public GitHubTokenType Type { get; set; }
 	}

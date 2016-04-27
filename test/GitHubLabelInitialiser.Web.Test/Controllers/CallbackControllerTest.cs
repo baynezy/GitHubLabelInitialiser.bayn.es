@@ -71,7 +71,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			var token = new GitHubAccessToken
 				{
 					AccessToken = "e72e16c7e42f292c6912e7710c838347ae178b4a",
-					Scope = new List<string> {"private_repo"},
+					Scope = new List<GitHubScope> {GitHubScope.PublicRepo},
 					Type = GitHubTokenType.Bearer
 				};
 			authenticator.Setup(m => m.Authenticate(It.IsAny<string>(), It.IsAny<string>())).Returns(token);

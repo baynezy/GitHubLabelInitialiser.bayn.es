@@ -64,13 +64,14 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		[Test]
 		public void Index_WhenCalledWithNoParameters_ThenReturnViewResultWithScopesSet()
 		{
-			var expectedScopes = new List<string> { "public_repo" };
+			var expectedScopes = new List<GitHubScope> { GitHubScope.PublicRepo};
 			var controller = CreateController();
 
 			var result = controller.Index();
 			var model = (HomeIndexViewModel)result.Model;
 
-			Assert.That(model.Scopes, Is.EqualTo(expectedScopes));
+			Assert.That(model.Scopes.Count, Is.EqualTo(expectedScopes.Count));
+			Assert.That(model.Scopes[0].Value, Is.EqualTo(GitHubScope.PublicRepo.Value));
 		}
 
 		[Test]
