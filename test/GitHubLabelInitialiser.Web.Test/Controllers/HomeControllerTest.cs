@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace GitHubLabelInitialiser.Web.Test.Controllers
 {
 	[TestFixture]
-	class HomeControllerTest
+	class HomeControllerTest : TestControllerBase
 	{
 		[Test]
 		public void HomeController_Extends_Controller()
@@ -88,11 +88,29 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			Assert.That(model.State, Is.EqualTo(expectedState));
 		}
 
-		private static HomeController CreateController(IConfig config = null, IGitHubStateGenerator gitHubStateGenerator = null)
+		[Test]
+		public void Index_WhenCalledWithNoParameters_ThenPopulateSessionWithState()
+		{
+			const string expectedState = "qwerty12345678";
+			var gitHubStateGenerator = new Mock<IGitHubStateGenerator>();
+			gitHubStateGenerator.Setup(m => m.GenerateState()).Returns(expectedState);
+			var controller = CreateController(gitHubStateGenerator: gitHubStateGenerator.Object);
+
+			controller.Index();
+
+			Assert.That(Session["GitHubAuthenticationState"], Is.EqualTo(expectedState));
+		}
+
+		private HomeController CreateController(IConfig config = null, IGitHubStateGenerator gitHubStateGenerator = null)
 		{
 			var mockGenerator = new Mock<IGitHubStateGenerator>();
 			mockGenerator.Setup(m => m.GenerateState()).Returns("wertyuijuytrewqyg");
-			return new HomeController(config ?? MockConfig(), gitHubStateGenerator ?? mockGenerator.Object);
+
+			var controller = new HomeController(config ?? MockConfig(), gitHubStateGenerator ?? mockGenerator.Object);
+
+			EnrichWithContext(controller);
+
+			return controller;
 		}
 
 		private static IConfig MockConfig()
