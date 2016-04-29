@@ -118,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binders\UserModelBinder.cs" />
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -135,6 +136,7 @@
     <Compile Include="Models\GitHubAccessToken.cs" />
     <Compile Include="Models\GitHubAuthViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Plumbing\ControllerInstaller.cs" />
     <Compile Include="Plumbing\WindsorControllerFactory.cs" />
     <Compile Include="Plumbing\Wiring.cs" />

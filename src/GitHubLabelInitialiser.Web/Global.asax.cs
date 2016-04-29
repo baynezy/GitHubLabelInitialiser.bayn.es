@@ -3,6 +3,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using GitHubLabelInitialiser.Web.Binders;
+using GitHubLabelInitialiser.Web.Models;
 using GitHubLabelInitialiser.Web.Plumbing;
 
 namespace GitHubLabelInitialiser.Web
@@ -19,6 +21,9 @@ namespace GitHubLabelInitialiser.Web
 			WebApiConfig.Register(GlobalConfiguration.Configuration);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+			ModelBinders.Binders.Add(typeof(User), new UserModelBinder());
+
 			_container = new WindsorContainer().Install(FromAssembly.This());
 			ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(_container.Kernel));
 		}
