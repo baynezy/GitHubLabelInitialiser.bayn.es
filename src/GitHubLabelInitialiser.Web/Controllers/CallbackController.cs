@@ -13,8 +13,9 @@ namespace GitHubLabelInitialiser.Web.Controllers
 			_gitHubAuthenticator = gitHubAuthenticator;
 		}
 
-		public ActionResult GitHub(GitHubAuthViewModel model)
+		public ActionResult GitHub(IUser user, GitHubAuthViewModel model)
 		{
+			var sessionState = user.GitHubAuthenticationState;
 			var token = _gitHubAuthenticator.Authenticate(model.Code, model.State);
 
 			return View(new GitHubAccessRequestViewModel

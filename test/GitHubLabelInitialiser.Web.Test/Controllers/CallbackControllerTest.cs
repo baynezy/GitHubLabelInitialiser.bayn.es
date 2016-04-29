@@ -29,7 +29,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			controller.GitHub(viewModel);
+			controller.GitHub(new User(), viewModel);
 
 			authenticator.Verify(f => f.Authenticate(code, state), Times.Once());
 		}
@@ -37,14 +37,13 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		[Test]
 		public void GitHub_WhenCalledWithValidModel_ThenReturnViewResult()
 		{
-			var authenticator = new Mock<IGitHubAuthenticator>();
-			var controller = CreateController(authenticator.Object);
+			var controller = CreateController();
 			const string code = "some-code";
 			const string state = "some-state";
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			var result = controller.GitHub(viewModel) as ViewResult;
+			var result = controller.GitHub(new User(), viewModel) as ViewResult;
 
 			Assert.That(result, Is.Not.Null);
 		}
@@ -52,14 +51,13 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		[Test]
 		public void GitHub_WhenCalledWithValidModel_ThenReturnViewModel()
 		{
-			var authenticator = new Mock<IGitHubAuthenticator>();
-			var controller = CreateController(authenticator.Object);
+			var controller = CreateController();
 			const string code = "some-code";
 			const string state = "some-state";
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			var result = (ViewResult)controller.GitHub(viewModel);
+			var result = (ViewResult)controller.GitHub(new User(), viewModel);
 
 			Assert.That(result.Model, Is.InstanceOf<GitHubAccessRequestViewModel>());
 		}
@@ -81,10 +79,27 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			var result = (ViewResult)controller.GitHub(viewModel);
+			var result = (ViewResult)controller.GitHub(new User(), viewModel);
 			var model = (GitHubAccessRequestViewModel)result.Model;
 
 			Assert.That(model.AccessToken, Is.EqualTo(token));
+		}
+
+		[Test]
+		public void GitHub_WhenCalledWithValidModel_ThenReadGitHubAuthStateFromSession()
+		{
+			const string code = "some-code";
+			const string callbackState = "some-state";
+			const string sessionState = "some-state";
+			var controller = CreateController();
+			var user = new Mock<IUser>();
+			user.SetupGet(m => m.GitHubAuthenticationState).Returns(sessionState);
+
+			var viewModel = new GitHubAuthViewModel { Code = code, State = callbackState };
+
+			controller.GitHub(user.Object, viewModel);
+
+			user.Verify(f => f.GitHubAuthenticationState, Times.Once);
 		}
 
 		private static CallbackController CreateController(IGitHubAuthenticator gitHubAuthenticator = null)

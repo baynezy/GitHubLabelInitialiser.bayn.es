@@ -22,7 +22,7 @@ namespace GitHubLabelInitialiser.Web
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-			ModelBinders.Binders.Add(typeof(User), new UserModelBinder());
+			ModelBinders.Binders.Add(typeof(IUser), new UserModelBinder());
 
 			_container = new WindsorContainer().Install(FromAssembly.This());
 			ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(_container.Kernel));
