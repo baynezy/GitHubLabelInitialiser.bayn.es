@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Config.cs" />
+    <Compile Include="Helpers\GitHubAuthenticator.cs" />
     <Compile Include="Helpers\GitHubLoginHelperExtension.cs" />
     <Compile Include="Helpers\GitHubScope.cs" />
     <Compile Include="Helpers\GitHubStateGenerator.cs" />

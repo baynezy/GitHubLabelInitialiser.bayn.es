@@ -42,13 +42,13 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 		{
 			const string clientId = "wereteWHDSAWETW";
 			const string redirectUri = "http://localhost/callback/github/";
-			var scope = new List<string> { "user", "user:email" };
+			var scope = new List<GitHubScope> { GitHubScope.PublicRepo, GitHubScope.User };
 			var helper = MvcHelper.GetHtmlHelper();
 			var html = helper.LoginButton(clientId, redirectUri, scope);
 			var expectedWithoutState =
 				string.Format(
 					@"<a href=""https://github.com/login/oauth/authorize?client_id={0}&amp;redirect_uri={1}&amp;scope={2}"">Create account with GitHub</a>",
-					clientId, redirectUri, string.Join(",", scope));
+					clientId, redirectUri, "public_repo,user");
 			var stateRemoved = RemoveState(html.ToHtmlString());
 
 			Assert.That(stateRemoved, Is.EqualTo(expectedWithoutState));
@@ -90,13 +90,13 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 			const string clientId = "wereteWHDSAWETW";
 			const string redirectUri = "http://localhost/callback/github/";
 			var state = RandomString();
-			var scope = new List<string> { "user", "user:email" };
+			var scope = new List<GitHubScope> { GitHubScope.PublicRepo, GitHubScope.User };
 			var helper = MvcHelper.GetHtmlHelper();
 			var html = helper.LoginButton(clientId, redirectUri, scope, state);
 			var expected =
 				string.Format(
 					@"<a href=""https://github.com/login/oauth/authorize?client_id={0}&amp;redirect_uri={1}&amp;scope={2}&amp;state={3}"">Create account with GitHub</a>",
-					clientId, redirectUri, string.Join(",", scope), state);
+					clientId, redirectUri, "public_repo,user", state);
 
 			Assert.That(html.ToHtmlString(), Is.EqualTo(expected));
 		}
@@ -116,7 +116,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 		{
 			const string clientId = "wereteWHDSAWETW";
 			const string redirectUri = "http://localhost/callback/github/";
-			var scope = new List<string> { "user", "user:email" };
+			var scope = new List<GitHubScope> { GitHubScope.PublicRepo, GitHubScope.User };
 			var helper = MvcHelper.GetHtmlHelper();
 			var html = helper.LoginButton(clientId, redirectUri, scope).ToHtmlString();
 			var html2 = helper.LoginButton(clientId, redirectUri, scope).ToHtmlString();
@@ -129,7 +129,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 		{
 			const string clientId = "wereteWHDSAWETW";
 			const string redirectUri = "http://localhost/callback/github/";
-			var scope = new List<string> { "user", "user:email" };
+			var scope = new List<GitHubScope> { GitHubScope.PublicRepo, GitHubScope.User };
 			var helper = MvcHelper.GetHtmlHelper();
 			var html = helper.LoginButton(clientId, redirectUri, scope).ToHtmlString();
 			var match = new Regex("amp;state=.+").Match(html).Success;

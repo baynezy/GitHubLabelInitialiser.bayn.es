@@ -8,7 +8,7 @@ namespace GitHubLabelInitialiser.Web.Helpers
 	{
 		private const string BaseUrl = "https://github.com/login/oauth/authorize";
 
-		public static MvcHtmlString LoginButton(this HtmlHelper htmlHelper, string clientId, string redirectUri = null, IList<string> scope = null, string state = null)
+		public static MvcHtmlString LoginButton(this HtmlHelper htmlHelper, string clientId, string redirectUri = null, IList<GitHubScope> scope = null, string state = null)
 		{
 			var link = new TagBuilder("a");
 			link.MergeAttribute("href", CreateLink(clientId, state ?? System.Guid.NewGuid().ToString(), redirectUri, scope));
@@ -18,7 +18,7 @@ namespace GitHubLabelInitialiser.Web.Helpers
 			return MvcHtmlString.Create(html);
 		}
 
-		private static string CreateLink(string clientId, string state, string redirectUri = null, IEnumerable<string> scope = null)
+		private static string CreateLink(string clientId, string state, string redirectUri = null, IEnumerable<GitHubScope> scope = null)
 		{
 			var optional = new StringBuilder();
 			var stateQuery = "&state=" + state;

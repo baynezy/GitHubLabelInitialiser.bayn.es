@@ -9,7 +9,17 @@ namespace GitHubLabelInitialiser.Web.Plumbing
 	{
 		public void Install(IWindsorContainer container, IConfigurationStore store)
 		{
-			container.Register(Component.For<IConfig>().ImplementedBy<Config>().LifeStyle.Transient);
+			container.Register(
+				Component.For<IConfig>()
+					.ImplementedBy<Config>()
+					.LifeStyle.Transient,
+				Component.For<IGitHubAuthenticator>()
+					.ImplementedBy<GitHubAuthenticator>()
+					.LifeStyle.Transient,
+				Component.For<IGitHubStateGenerator>()
+					.ImplementedBy<GitHubStateGenerator>()
+					.LifeStyle.Transient
+				);
 		}
 	}
 }
