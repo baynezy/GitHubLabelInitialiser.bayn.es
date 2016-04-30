@@ -18,6 +18,11 @@ namespace GitHubLabelInitialiser.Web.Controllers
 			var sessionState = user.GitHubAuthenticationState;
 			var token = _gitHubAuthenticator.Authenticate(model.Code, model.State);
 
+			if (!sessionState.Equals(model.State))
+			{
+				return new HttpStatusCodeResult(403, "Forbidden");
+			}
+
 			return View(new GitHubAccessRequestViewModel
 				{
 					AccessToken = token

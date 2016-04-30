@@ -29,7 +29,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			controller.GitHub(new User(), viewModel);
+			controller.GitHub(MockUser(state).Object, viewModel);
 
 			authenticator.Verify(f => f.Authenticate(code, state), Times.Once());
 		}
@@ -43,7 +43,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			var result = controller.GitHub(new User(), viewModel) as ViewResult;
+			var result = controller.GitHub(MockUser(state).Object, viewModel) as ViewResult;
 
 			Assert.That(result, Is.Not.Null);
 		}
@@ -57,7 +57,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			var result = (ViewResult)controller.GitHub(new User(), viewModel);
+			var result = (ViewResult)controller.GitHub(MockUser(state).Object, viewModel);
 
 			Assert.That(result.Model, Is.InstanceOf<GitHubAccessRequestViewModel>());
 		}
@@ -79,7 +79,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			var result = (ViewResult)controller.GitHub(new User(), viewModel);
+			var result = (ViewResult)controller.GitHub(MockUser(state).Object, viewModel);
 			var model = (GitHubAccessRequestViewModel)result.Model;
 
 			Assert.That(model.AccessToken, Is.EqualTo(token));
@@ -92,14 +92,41 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			const string callbackState = "some-state";
 			const string sessionState = "some-state";
 			var controller = CreateController();
-			var user = new Mock<IUser>();
-			user.SetupGet(m => m.GitHubAuthenticationState).Returns(sessionState);
+			var user = MockUser(sessionState);
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = callbackState };
 
 			controller.GitHub(user.Object, viewModel);
 
 			user.Verify(f => f.GitHubAuthenticationState, Times.Once);
+		}
+
+		[Test]
+		public void GitHub_WhenAuthenticationStateDoesntMatchSessionState_ThenReturn403StatusCode()
+		{
+			const string callbackState = "some-state";
+			const string sessionState = "some-other-state";
+
+			var controller = CreateController();
+			var user = new Mock<IUser>();
+			user.SetupGet(m => m.GitHubAuthenticationState).Returns(sessionState);
+
+			var viewModel = new GitHubAuthViewModel {State = callbackState};
+
+			var result = controller.GitHub(user.Object, viewModel) as HttpStatusCodeResult;
+
+			Assert.That(result, Is.Not.Null);
+// ReSharper disable PossibleNullReferenceException
+			Assert.That(result.StatusCode, Is.EqualTo(403));
+// ReSharper restore PossibleNullReferenceException
+			Assert.That(result.StatusDescription, Is.EqualTo("Forbidden"));
+		}
+
+		private static Mock<IUser> MockUser(string sessionState)
+		{
+			var user = new Mock<IUser>();
+			user.SetupGet(m => m.GitHubAuthenticationState).Returns(sessionState);
+			return user;
 		}
 
 		private static CallbackController CreateController(IGitHubAuthenticator gitHubAuthenticator = null)
