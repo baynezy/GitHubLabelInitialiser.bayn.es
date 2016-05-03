@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using GitHubLabelInitialiser.Web.Helpers;
 using Moq;
 using NUnit.Framework;
@@ -43,7 +44,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 		}
 
 		[Test]
-		public async void Authenticate_WhenCalled_CreateTokenFromReturnedHttpResponse()
+		public async Task<int> Authenticate_WhenCalled_CreateTokenFromReturnedHttpResponse()
 		{
 			const string code = "some-code";
 			const string state = "some-state";
@@ -58,7 +59,9 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 			Assert.That(token.Scope.Count, Is.EqualTo(1));
 			Assert.That(token.Scope[0].Value, Is.EqualTo(GitHubScope.PublicRepo.Value));
 			Assert.That(token.Type, Is.EqualTo(GitHubTokenType.Bearer));
-			
+
+			return 1;
+
 		}
 
 		private static Mock<IHttpHelper> MockHttpHelper(Action<Uri,IDictionary<string,string>,string> callback)
