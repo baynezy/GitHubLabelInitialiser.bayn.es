@@ -118,17 +118,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binders\UserModelBinder.cs" />
+    <Compile Include="Controllers\CallbackController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Config.cs" />
+    <Compile Include="Helpers\GitHubAuthenticator.cs" />
+    <Compile Include="Helpers\GitHubLoginHelperExtension.cs" />
+    <Compile Include="Helpers\GitHubScope.cs" />
+    <Compile Include="Helpers\GitHubStateGenerator.cs" />
+    <Compile Include="Helpers\GitHubTokenType.cs" />
+    <Compile Include="Helpers\HttpHelper.cs" />
+    <Compile Include="Helpers\IConfig.cs" />
+    <Compile Include="Helpers\IGitHubAuthenticator.cs" />
+    <Compile Include="Helpers\IGitHubStateGenerator.cs" />
+    <Compile Include="Helpers\IHttpHelper.cs" />
+    <Compile Include="Models\GitHubAccessRequestViewModel.cs" />
+    <Compile Include="Models\GitHubAccessToken.cs" />
+    <Compile Include="Models\GitHubAuthViewModel.cs" />
+    <Compile Include="Models\HomeIndexViewModel.cs" />
+    <Compile Include="Models\IUser.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Plumbing\ControllerInstaller.cs" />
     <Compile Include="Plumbing\WindsorControllerFactory.cs" />
+    <Compile Include="Plumbing\Wiring.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\bootstrap\css\bootstrap-min.css" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -141,11 +166,27 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_BaseLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Callback\GitHub.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
