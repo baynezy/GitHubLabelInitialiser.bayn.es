@@ -19,7 +19,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 		{
 			var config = CreateConfig();
 
-			Assert.That(config.GitHubClientId(), Is.EqualTo("testClientId"));
+			Assert.That(config.GitHubClientId, Is.EqualTo("testClientId"));
 		}
 
 		[Test]
@@ -27,7 +27,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 		{
 			var config = CreateConfig();
 
-			Assert.That(config.GitHubRedirectUrl(), Is.EqualTo("redirctUrl"));
+			Assert.That(config.GitHubRedirectUrl, Is.EqualTo("redirctUrl"));
 		}
 
 		private static IConfig CreateConfig()

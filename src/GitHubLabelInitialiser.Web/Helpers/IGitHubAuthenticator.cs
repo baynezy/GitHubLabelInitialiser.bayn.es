@@ -1,9 +1,10 @@
-﻿using GitHubLabelInitialiser.Web.Models;
+﻿using System.Threading.Tasks;
+using GitHubLabelInitialiser.Web.Models;
 
 namespace GitHubLabelInitialiser.Web.Helpers
 {
 	public interface IGitHubAuthenticator
 	{
-		GitHubAccessToken Authenticate(string code, string state);
+		Task<GitHubAccessToken> Authenticate(string code, string state);
 	}
 }

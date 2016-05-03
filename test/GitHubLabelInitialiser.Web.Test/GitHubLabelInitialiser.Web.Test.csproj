@@ -81,15 +81,19 @@
     <Compile Include="Controllers\CallbackControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Helpers\ConfigTest.cs" />
+    <Compile Include="Helpers\GitHubAuthenticatorTest.cs" />
     <Compile Include="Helpers\GitHubLoginHelperExtensionTest.cs" />
     <Compile Include="Helpers\GitHubStateGeneratorTest.cs" />
+    <Compile Include="Helpers\HttpHelperTest.cs" />
     <Compile Include="MockHttpSession.cs" />
     <Compile Include="MvcHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestControllerBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

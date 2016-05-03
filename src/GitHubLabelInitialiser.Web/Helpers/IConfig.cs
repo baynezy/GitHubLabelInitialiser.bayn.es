@@ -2,7 +2,8 @@
 {
 	public interface IConfig
 	{
-		string GitHubClientId();
-		string GitHubRedirectUrl();
+		string GitHubClientId { get; }
+		string GitHubRedirectUrl { get; }
+		string GitHubClientSecret { get;  }
 	}
 }

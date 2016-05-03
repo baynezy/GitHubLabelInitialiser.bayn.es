@@ -4,14 +4,23 @@ namespace GitHubLabelInitialiser.Web.Helpers
 {
 	public class Config : IConfig
 	{
-		public string GitHubClientId()
+		public string GitHubClientId
 		{
-			return ConfigurationManager.AppSettings["GithubClientId"];
+			get { return ConfigurationManager.AppSettings["GithubClientId"]; }
+			
 		}
 
-		public string GitHubRedirectUrl()
+		public string GitHubRedirectUrl
 		{
-			return ConfigurationManager.AppSettings["GitHubRedirectUrl"];
+			get { return ConfigurationManager.AppSettings["GitHubRedirectUrl"]; }
+		}
+
+		public string GitHubClientSecret {
+			get
+			{
+				return System.Environment.GetEnvironmentVariable("GitHubClientSecret") ??
+					   ConfigurationManager.AppSettings["GitHubClientSecret"];
+			}
 		}
 	}
 }

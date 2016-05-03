@@ -117,8 +117,8 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		{
 			var config = new Mock<IConfig>();
 
-			config.Setup(m => m.GitHubClientId()).Returns("d84a8626442322ed91d0");
-			config.Setup(m => m.GitHubRedirectUrl()).Returns("http://localhost:50038/callback/github");
+			config.Setup(m => m.GitHubClientId).Returns("d84a8626442322ed91d0");
+			config.Setup(m => m.GitHubRedirectUrl).Returns("http://localhost:50038/callback/github");
 
 			return config.Object;
 		}

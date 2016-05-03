@@ -72,7 +72,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 					Scope = new List<GitHubScope> {GitHubScope.PublicRepo},
 					Type = GitHubTokenType.Bearer
 				};
-			authenticator.Setup(m => m.Authenticate(It.IsAny<string>(), It.IsAny<string>())).Returns(token);
+			authenticator.Setup(m => m.Authenticate(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(token);
 			var controller = CreateController(authenticator.Object);
 			const string code = "some-code";
 			const string state = "some-state";

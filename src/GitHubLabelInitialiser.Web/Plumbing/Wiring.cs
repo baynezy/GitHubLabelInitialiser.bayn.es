@@ -18,6 +18,9 @@ namespace GitHubLabelInitialiser.Web.Plumbing
 					.LifeStyle.Transient,
 				Component.For<IGitHubStateGenerator>()
 					.ImplementedBy<GitHubStateGenerator>()
+					.LifeStyle.Transient,
+				Component.For<IHttpHelper>()
+					.ImplementedBy<HttpHelper>()
 					.LifeStyle.Transient
 				);
 		}

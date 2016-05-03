@@ -1,4 +1,6 @@
-﻿namespace GitHubLabelInitialiser.Web.Helpers
+﻿using System.Reflection;
+
+namespace GitHubLabelInitialiser.Web.Helpers
 {
 	public class GitHubScope
 	{
@@ -15,6 +17,26 @@
 		public override string ToString()
 		{
 			return Value;
+		}
+
+		public static GitHubScope TryParse(string scope)
+		{
+			GitHubScope parsed = null;
+
+			var type = typeof (GitHubScope);
+			var properties = type.GetProperties(BindingFlags.Static | BindingFlags.Public);
+
+			foreach (var propertyInfo in properties)
+			{
+				var property = (GitHubScope)propertyInfo.GetGetMethod().Invoke(null, new object[0]);
+				if (property.Value.Equals(scope))
+				{
+					parsed = property;
+					break;
+				}
+			}
+
+			return parsed;
 		}
 	}
 }

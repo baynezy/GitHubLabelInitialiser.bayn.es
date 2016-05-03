@@ -19,8 +19,8 @@ namespace GitHubLabelInitialiser.Web.Controllers
 
 		public ViewResult Index()
 		{
-			var gitHubClientId = _config.GitHubClientId();
-			var githubRedirectUrl = _config.GitHubRedirectUrl();
+			var gitHubClientId = _config.GitHubClientId;
+			var githubRedirectUrl = _config.GitHubRedirectUrl;
 			var state = _gitHubStateGenerator.GenerateState();
 
 			Session["GitHubAuthenticationState"] = state;
