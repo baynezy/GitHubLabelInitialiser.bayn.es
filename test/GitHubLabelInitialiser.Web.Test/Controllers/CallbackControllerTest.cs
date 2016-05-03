@@ -35,54 +35,34 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		}
 
 		[Test]
-		public void GitHub_WhenCalledWithValidModel_ThenReturnViewResult()
+		public void GitHub_WhenCalledWithValidModel_ThenReturnRedirectResult()
 		{
-			var controller = CreateController();
 			const string code = "some-code";
 			const string state = "some-state";
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			var result = controller.GitHub(MockUser(state).Object, viewModel) as ViewResult;
+			var controller = CreateController();
+
+			var result = controller.GitHub(MockUser(state).Object, viewModel) as RedirectResult;
 
 			Assert.That(result, Is.Not.Null);
 		}
 
 		[Test]
-		public void GitHub_WhenCalledWithValidModel_ThenReturnViewModel()
+		public void GitHub_WhenCalledWithValidModel_ThenRedirectToAddLabels()
 		{
+			const string code = "some-code";
+			const string state = "some-state";
+
+			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
+
 			var controller = CreateController();
-			const string code = "some-code";
-			const string state = "some-state";
 
-			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
+			var result = (RedirectResult) controller.GitHub(MockUser(state).Object, viewModel);
 
-			var result = (ViewResult)controller.GitHub(MockUser(state).Object, viewModel);
-
-			Assert.That(result.Model, Is.InstanceOf<GitHubAccessRequestViewModel>());
-		}
-
-		[Test]
-		public void GitHub_WhenCalledWithValidModel_ThenPopulateViewModelWithToken()
-		{
-			var authenticator = new Mock<IGitHubAuthenticator>();
-			var token = new GitHubAccessToken
-				{
-					AccessToken = "e72e16c7e42f292c6912e7710c838347ae178b4a",
-					Scope = new List<GitHubScope> {GitHubScope.PublicRepo},
-					Type = GitHubTokenType.Bearer
-				};
-			authenticator.Setup(m => m.Authenticate(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(token);
-			var controller = CreateController(authenticator.Object);
-			const string code = "some-code";
-			const string state = "some-state";
-
-			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
-
-			var result = (ViewResult)controller.GitHub(MockUser(state).Object, viewModel);
-			var model = (GitHubAccessRequestViewModel)result.Model;
-
-			Assert.That(model.AccessToken, Is.EqualTo(token));
+			Assert.That(result.Url, Is.EqualTo("/labels"));
+			Assert.That(result.Permanent, Is.False);
 		}
 
 		[Test]

@@ -135,7 +135,6 @@
     <Compile Include="Helpers\IGitHubAuthenticator.cs" />
     <Compile Include="Helpers\IGitHubStateGenerator.cs" />
     <Compile Include="Helpers\IHttpHelper.cs" />
-    <Compile Include="Models\GitHubAccessRequestViewModel.cs" />
     <Compile Include="Models\GitHubAccessToken.cs" />
     <Compile Include="Models\GitHubAuthViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
@@ -184,9 +183,6 @@
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Callback\GitHub.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
