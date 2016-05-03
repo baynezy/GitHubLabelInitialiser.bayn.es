@@ -23,6 +23,8 @@ namespace GitHubLabelInitialiser.Web.Controllers
 				return new HttpStatusCodeResult(403, "Forbidden");
 			}
 
+			Session["GitHubAuthToken"] = token;
+
 			return View(new GitHubAccessRequestViewModel
 				{
 					AccessToken = token

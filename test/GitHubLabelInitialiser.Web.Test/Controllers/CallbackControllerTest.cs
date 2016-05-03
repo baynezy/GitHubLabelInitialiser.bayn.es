@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace GitHubLabelInitialiser.Web.Test.Controllers
 {
 	[TestFixture]
-	class CallbackControllerTest
+	class CallbackControllerTest : TestControllerBase
 	{
 		[Test]
 		public void CallbackController_ImplementsController()
@@ -122,6 +122,33 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			Assert.That(result.StatusDescription, Is.EqualTo("Forbidden"));
 		}
 
+		[Test]
+		public void GitHub_WhenSuccessfullyCalling_ThenPopululateTokenIntoSession()
+		{
+			const string state = "some-state";
+			var expectedToken = new GitHubAccessToken
+				{
+					AccessToken = "some-token",
+					Scope = new List<GitHubScope>
+						{
+							GitHubScope.PublicRepo
+						},
+					Type = GitHubTokenType.Bearer
+				};
+			var authenticator = new Mock<IGitHubAuthenticator>();
+			authenticator.Setup(m => m.Authenticate(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(expectedToken);
+
+			var controller = CreateController(authenticator.Object);
+
+			var user = MockUser(state);
+
+			var viewModel = new GitHubAuthViewModel { State = state };
+
+			controller.GitHub(user.Object, viewModel);
+
+			Assert.That(Session["GitHubAuthToken"], Is.EqualTo(expectedToken));
+		}
+
 		private static Mock<IUser> MockUser(string sessionState)
 		{
 			var user = new Mock<IUser>();
@@ -129,9 +156,12 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			return user;
 		}
 
-		private static CallbackController CreateController(IGitHubAuthenticator gitHubAuthenticator = null)
+		private CallbackController CreateController(IGitHubAuthenticator gitHubAuthenticator = null)
 		{
-			return new CallbackController(gitHubAuthenticator ?? new Mock<IGitHubAuthenticator>().Object);
+			var controller = new CallbackController(gitHubAuthenticator ?? new Mock<IGitHubAuthenticator>().Object);
+			EnrichWithContext(controller);
+
+			return controller;
 		}
 	}
 }
