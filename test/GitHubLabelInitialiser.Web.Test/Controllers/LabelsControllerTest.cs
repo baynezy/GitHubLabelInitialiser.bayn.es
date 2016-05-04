@@ -36,7 +36,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			var user = new Mock<IUser>();
 			var controller = CreateController();
 
-			var result = controller.Index(user.Object) as RedirectResult;
+			var result = controller.Index(user.Object) as RedirectToRouteResult;
 
 			Assert.That(result, Is.Not.Null);
 		}
@@ -47,9 +47,10 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			var user = new Mock<IUser>();
 			var controller = CreateController();
 
-			var result = (RedirectResult) controller.Index(user.Object);
+			var result = (RedirectToRouteResult) controller.Index(user.Object);
 
-			Assert.That(result.Url, Is.EqualTo("/"));
+			Assert.That(result.RouteValues["controller"], Is.EqualTo("home"));
+			Assert.That(result.RouteValues["action"], Is.EqualTo("index"));
 			Assert.That(result.Permanent, Is.False);
 		}
 

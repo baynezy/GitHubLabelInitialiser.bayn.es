@@ -25,7 +25,7 @@ namespace GitHubLabelInitialiser.Web.Controllers
 
 			Session["GitHubAuthToken"] = token;
 
-			return new RedirectResult("/labels");
+			return RedirectToAction("index", "labels");
 		}
 	}
 }

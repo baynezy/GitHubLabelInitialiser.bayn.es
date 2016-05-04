@@ -9,7 +9,7 @@ namespace GitHubLabelInitialiser.Web.Controllers
 		{
 			var gitHubAccessToken = user.GitHubAccessToken;
 
-			return new RedirectResult("/");
+			return RedirectToAction("index", "home");
 		}
 	}
 }
