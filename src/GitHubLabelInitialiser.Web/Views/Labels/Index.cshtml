@@ -1,0 +1,13 @@
+﻿@model GitHubLabelInitialiser.Web.Models.ChooseRepositoryViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Choose Repository</h2>
+<ul>
+	@foreach (var repository in Model.Repositories)
+	{
+		<li>@repository.Name</li>
+	}
+</ul>

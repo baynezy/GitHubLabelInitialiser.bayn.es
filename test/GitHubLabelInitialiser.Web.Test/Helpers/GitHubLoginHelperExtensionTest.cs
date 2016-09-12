@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using GitHubLabelInitialiser.Web.Helpers;
+using MvcTestHelper;
 using NUnit.Framework;
 
 namespace GitHubLabelInitialiser.Web.Test.Helpers

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using GitHubLabelInitialiser.Web.Controllers;
 using GitHubLabelInitialiser.Web.Helpers;
 using GitHubLabelInitialiser.Web.Models;
 using Moq;
+using MvcTestHelper.Controllers;
 using NUnit.Framework;
 
 namespace GitHubLabelInitialiser.Web.Test.Controllers
@@ -20,7 +22,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		}
 
 		[Test]
-		public void GitHub_WhenCalledWithValidModel_ThenCallIGitHubAuthenticatorAuthenticate()
+		public async Task GitHub_WhenCalledWithValidModel_ThenCallIGitHubAuthenticatorAuthenticate()
 		{
 			var authenticator = new Mock<IGitHubAuthenticator>();
 			var controller = CreateController(authenticator.Object);
@@ -29,13 +31,13 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = state };
 
-			controller.GitHub(MockUser(state).Object, viewModel);
+			await controller.GitHub(MockUser(state).Object, viewModel);
 
 			authenticator.Verify(f => f.Authenticate(code, state), Times.Once());
 		}
 
 		[Test]
-		public void GitHub_WhenCalledWithValidModel_ThenReturnRedirectResult()
+		public async Task GitHub_WhenCalledWithValidModel_ThenReturnRedirectResult()
 		{
 			const string code = "some-code";
 			const string state = "some-state";
@@ -44,13 +46,13 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var controller = CreateController();
 
-			var result = controller.GitHub(MockUser(state).Object, viewModel) as RedirectToRouteResult;
+			var result = await controller.GitHub(MockUser(state).Object, viewModel) as RedirectToRouteResult;
 
 			Assert.That(result, Is.Not.Null);
 		}
 
 		[Test]
-		public void GitHub_WhenCalledWithValidModel_ThenRedirectToAddLabels()
+		public async Task GitHub_WhenCalledWithValidModel_ThenRedirectToAddLabels()
 		{
 			const string code = "some-code";
 			const string state = "some-state";
@@ -59,7 +61,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var controller = CreateController();
 
-			var result = (RedirectToRouteResult) controller.GitHub(MockUser(state).Object, viewModel);
+			var result = (RedirectToRouteResult) await controller.GitHub(MockUser(state).Object, viewModel);
 
 			Assert.That(result.RouteValues["controller"], Is.EqualTo("labels"));
 			Assert.That(result.RouteValues["action"], Is.EqualTo("index"));
@@ -67,7 +69,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		}
 
 		[Test]
-		public void GitHub_WhenCalledWithValidModel_ThenReadGitHubAuthStateFromSession()
+		public async Task GitHub_WhenCalledWithValidModel_ThenReadGitHubAuthStateFromSession()
 		{
 			const string code = "some-code";
 			const string callbackState = "some-state";
@@ -77,13 +79,13 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { Code = code, State = callbackState };
 
-			controller.GitHub(user.Object, viewModel);
+			await controller.GitHub(user.Object, viewModel);
 
 			user.Verify(f => f.GitHubAuthenticationState, Times.Once);
 		}
 
 		[Test]
-		public void GitHub_WhenAuthenticationStateDoesntMatchSessionState_ThenReturn403StatusCode()
+		public async Task GitHub_WhenAuthenticationStateDoesntMatchSessionState_ThenReturn403StatusCode()
 		{
 			const string callbackState = "some-state";
 			const string sessionState = "some-other-state";
@@ -94,7 +96,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel {State = callbackState};
 
-			var result = controller.GitHub(user.Object, viewModel) as HttpStatusCodeResult;
+			var result = await controller.GitHub(user.Object, viewModel) as HttpStatusCodeResult;
 
 			Assert.That(result, Is.Not.Null);
 // ReSharper disable PossibleNullReferenceException
@@ -104,7 +106,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		}
 
 		[Test]
-		public void GitHub_WhenSuccessfullyCalling_ThenPopululateTokenIntoSession()
+		public async Task GitHub_WhenSuccessfullyCalling_ThenPopululateTokenIntoSession()
 		{
 			const string state = "some-state";
 			var expectedToken = new GitHubAccessToken
@@ -125,7 +127,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 
 			var viewModel = new GitHubAuthViewModel { State = state };
 
-			controller.GitHub(user.Object, viewModel);
+			await controller.GitHub(user.Object, viewModel);
 
 			Assert.That(Session["GitHubAuthToken"], Is.EqualTo(expectedToken));
 		}

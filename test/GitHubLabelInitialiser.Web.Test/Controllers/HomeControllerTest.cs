@@ -4,6 +4,7 @@ using GitHubLabelInitialiser.Web.Controllers;
 using GitHubLabelInitialiser.Web.Helpers;
 using GitHubLabelInitialiser.Web.Models;
 using Moq;
+using MvcTestHelper.Controllers;
 using NUnit.Framework;
 
 namespace GitHubLabelInitialiser.Web.Test.Controllers

@@ -5,5 +5,6 @@
 		string GitHubClientId { get; }
 		string GitHubRedirectUrl { get; }
 		string GitHubClientSecret { get;  }
+		string AppName { get; }
 	}
 }

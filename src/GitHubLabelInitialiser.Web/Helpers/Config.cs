@@ -22,5 +22,14 @@ namespace GitHubLabelInitialiser.Web.Helpers
 					   ConfigurationManager.AppSettings["GitHubClientSecret"];
 			}
 		}
+
+		public string AppName
+		{
+			get
+			{
+				return System.Environment.GetEnvironmentVariable("AppName") ??
+					   ConfigurationManager.AppSettings["AppName"];
+			}
+		}
 	}
 }
