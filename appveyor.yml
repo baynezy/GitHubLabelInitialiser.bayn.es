@@ -3,7 +3,7 @@ skip_tags: true
 configuration: Release
 test:
   assemblies:
-    - **\*.Test.dll
+    - '**\*.Test.dll'
 build:
   publish_wap: true
   verbosity: minimal
