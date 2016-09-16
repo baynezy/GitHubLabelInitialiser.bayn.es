@@ -1,0 +1,14 @@
+﻿@model GitHubLabelInitialiser.Web.Models.UpdateLabelViewModel
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Update Labels</h2>
+<h3>Existing Labels</h3>
+<ul>
+    @foreach (var label in Model.Labels)
+    {
+        <li>@label.Name - @label.Color</li>
+    }
+</ul>

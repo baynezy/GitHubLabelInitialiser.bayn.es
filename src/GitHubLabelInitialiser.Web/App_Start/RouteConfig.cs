@@ -14,6 +14,13 @@ namespace GitHubLabelInitialiser.Web
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 			routes.MapRoute(
+				name: "Labels Update",
+				url: "{controller}/{action}/{username}/{repository}",
+				defaults: new { controller = "Labels", action="Update"},
+				constraints: new { controller = "Labels"}
+				);
+
+			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

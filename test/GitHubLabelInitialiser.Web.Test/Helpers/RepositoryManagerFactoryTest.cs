@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using GitHubLabelInitialiser.Web.Helpers;
-using GitHubLabelInitialiser.Web.Models;
+﻿using GitHubLabelInitialiser.Web.Helpers;
 using Moq;
 using NUnit.Framework;
 

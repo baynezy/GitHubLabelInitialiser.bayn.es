@@ -49,8 +49,8 @@
       <HintPath>..\..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="GitHubLabelInitialiser, Version=2.0.2.38298, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\GitHubLabelInitialiser.2.0.2.38298\lib\net45\GitHubLabelInitialiser.dll</HintPath>
+    <Reference Include="GitHubLabelInitialiser, Version=2.0.3.31177, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\GitHubLabelInitialiser.2.0.3.31177\lib\net45\GitHubLabelInitialiser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -144,13 +144,16 @@
     <Compile Include="Helpers\IGitHubAuthenticator.cs" />
     <Compile Include="Helpers\IGitHubStateGenerator.cs" />
     <Compile Include="Helpers\IHttpHelper.cs" />
+    <Compile Include="Helpers\ILabelManagerFactory.cs" />
     <Compile Include="Helpers\IRepositoryManagerFactory.cs" />
+    <Compile Include="Helpers\LabelManagerFactory.cs" />
     <Compile Include="Helpers\RepositoryManagerFactory.cs" />
     <Compile Include="Models\ChooseRepositoryViewModel.cs" />
     <Compile Include="Models\GitHubAccessToken.cs" />
     <Compile Include="Models\GitHubAuthViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Models\IUser.cs" />
+    <Compile Include="Models\UpdateLabelViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Plumbing\ControllerInstaller.cs" />
     <Compile Include="Plumbing\WindsorControllerFactory.cs" />
@@ -198,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Labels\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Labels\Update.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

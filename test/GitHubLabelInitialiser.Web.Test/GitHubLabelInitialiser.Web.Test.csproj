@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GitHubLabelInitialiser, Version=2.0.1.10001, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\GitHubLabelInitialiser.2.0.1.10001\lib\net45\GitHubLabelInitialiser.dll</HintPath>
+    <Reference Include="GitHubLabelInitialiser, Version=2.0.3.31177, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\GitHubLabelInitialiser.2.0.3.31177\lib\net45\GitHubLabelInitialiser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -99,6 +99,7 @@
     <Compile Include="Helpers\GitHubLoginHelperExtensionTest.cs" />
     <Compile Include="Helpers\GitHubStateGeneratorTest.cs" />
     <Compile Include="Helpers\HttpHelperTest.cs" />
+    <Compile Include="Helpers\LabelManagerFactoryTest.cs" />
     <Compile Include="Helpers\RepositoryManagerFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
