@@ -1,4 +1,5 @@
 ﻿using GitHubLabelInitialiser.Web.Helpers;
+using Moq;
 using NUnit.Framework;
 
 namespace GitHubLabelInitialiser.Web.Test.Helpers
@@ -16,7 +17,9 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 
 		private static ILabelManagerFactory CreateFactory()
 		{
-			return new LabelManagerFactory();
+			var config = new Mock<IConfig>();
+			config.SetupGet(p => p.AppName).Returns("some-app");
+			return new LabelManagerFactory(config.Object);
 		}
 	}
 }
