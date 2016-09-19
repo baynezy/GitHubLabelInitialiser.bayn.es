@@ -1,0 +1,26 @@
+﻿@model GitHubLabelInitialiser.Web.Models.UpdateLabelViewModel
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Update Labels</h2>
+<h3>Add Labels</h3>
+
+<div>
+    @using (Html.BeginForm("Initialise", "Labels", FormMethod.Post))
+    {
+        for (var i = 0; i < Model.Labels.Count; i++)
+        {
+            <div>
+                @Html.TextBoxFor(m => m.Labels[i].Name)
+                @Html.TextBoxFor(m => m.Labels[i].Color)
+            </div>
+        }
+        
+        @Html.HiddenFor(m => m.Username)
+        @Html.HiddenFor(m => m.Repository)
+        
+        <input type="submit"/>
+    }
+</div>

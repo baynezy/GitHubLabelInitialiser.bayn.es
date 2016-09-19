@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using GitHubLabelInitialiser.Web.Helpers;
 using GitHubLabelInitialiser.Web.Models;
 
@@ -13,10 +14,10 @@ namespace GitHubLabelInitialiser.Web.Controllers
 			_gitHubAuthenticator = gitHubAuthenticator;
 		}
 
-		public ActionResult GitHub(IUser user, GitHubAuthViewModel model)
+		public async Task<ActionResult> GitHub(IUser user, GitHubAuthViewModel model)
 		{
 			var sessionState = user.GitHubAuthenticationState;
-			var token = _gitHubAuthenticator.Authenticate(model.Code, model.State).Result;
+			var token = await _gitHubAuthenticator.Authenticate(model.Code, model.State);
 
 			if (!sessionState.Equals(model.State))
 			{
@@ -25,10 +26,7 @@ namespace GitHubLabelInitialiser.Web.Controllers
 
 			Session["GitHubAuthToken"] = token;
 
-			return View(new GitHubAccessRequestViewModel
-				{
-					AccessToken = token
-				});
+			return RedirectToAction("index", "labels");
 		}
 	}
 }

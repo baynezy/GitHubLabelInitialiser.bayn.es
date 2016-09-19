@@ -1,6 +1,9 @@
 version: 1.0.{build}
 skip_tags: true
 configuration: Release
+test:
+  assemblies:
+    - '**\*.Test.dll'
 build:
   publish_wap: true
   verbosity: minimal

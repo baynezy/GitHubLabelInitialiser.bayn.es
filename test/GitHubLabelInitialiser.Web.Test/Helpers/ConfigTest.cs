@@ -30,6 +30,14 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 			Assert.That(config.GitHubRedirectUrl, Is.EqualTo("redirctUrl"));
 		}
 
+		[Test]
+		public void AppName_WhenCalled_ThenReturnValueFromApplicationconfig()
+		{
+			var config = CreateConfig();
+
+			Assert.That(config.AppName, Is.EqualTo("app-name"));
+		}
+
 		private static IConfig CreateConfig()
 		{
 			return new Config();

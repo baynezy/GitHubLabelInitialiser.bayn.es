@@ -11,6 +11,7 @@ namespace GitHubLabelInitialiser.Web.Binders
 			if (controllerContext.HttpContext.Session != null)
 			{
 				user.GitHubAuthenticationState = controllerContext.HttpContext.Session["GitHubAuthenticationState"] as string;
+				user.GitHubAccessToken = controllerContext.HttpContext.Session["GitHubAuthToken"] as GitHubAccessToken;
 			}
 
 			return user;

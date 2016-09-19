@@ -1,0 +1,9 @@
+﻿@model GitHubLabelInitialiser.Web.Models.ChooseRepositoryViewModel
+
+<h2>Choose Repository</h2>
+<ul>
+	@foreach (var repository in Model.Repositories)
+	{
+		<li>@Html.ActionLink(repository.Name, "Update", "Labels", new { username = repository.OwnerUsername, repository = repository.Name}, new {})</li>
+	}
+</ul>
