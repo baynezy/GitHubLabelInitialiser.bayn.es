@@ -5,10 +5,22 @@
 }
 
 <h2>Update Labels</h2>
-<h3>Existing Labels</h3>
-<ul>
-    @foreach (var label in Model.Labels)
+<h3>Add Labels</h3>
+
+<div>
+    @using (Html.BeginForm("Initialise", "Labels", FormMethod.Post))
     {
-        <li>@label.Name - @label.Color</li>
+        for (var i = 0; i < Model.Labels.Count; i++)
+        {
+            <div>
+                @Html.TextBoxFor(m => m.Labels[i].Name)
+                @Html.TextBoxFor(m => m.Labels[i].Color)
+            </div>
+        }
+        
+        @Html.HiddenFor(m => m.Username)
+        @Html.HiddenFor(m => m.Repository)
+        
+        <input type="submit"/>
     }
-</ul>
+</div>

@@ -147,10 +147,12 @@
     <Compile Include="Helpers\ILabelManagerFactory.cs" />
     <Compile Include="Helpers\IRepositoryManagerFactory.cs" />
     <Compile Include="Helpers\LabelManagerFactory.cs" />
+    <Compile Include="Helpers\LabelModelConverterExtention.cs" />
     <Compile Include="Helpers\RepositoryManagerFactory.cs" />
     <Compile Include="Models\ChooseRepositoryViewModel.cs" />
     <Compile Include="Models\GitHubAccessToken.cs" />
     <Compile Include="Models\GitHubAuthViewModel.cs" />
+    <Compile Include="Models\GitHubLabelViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Models\IUser.cs" />
     <Compile Include="Models\UpdateLabelViewModel.cs" />
@@ -204,6 +206,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Labels\Update.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Labels\Initialise.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using GitHubLabelInitialiser.Web.Helpers;
 using GitHubLabelInitialiser.Web.Models;
@@ -36,10 +37,11 @@ namespace GitHubLabelInitialiser.Web.Controllers
 		public async Task<ViewResult> Update(string username, string repository, IUser user)
 		{
 			var labelManager = _labelManagerFactory.Create(user.GitHubAccessToken);
+			var labels = await labelManager.GetLabelsForRepository(username, repository);
 
 			var viewModel = new UpdateLabelViewModel
 				{
-					Labels = await labelManager.GetLabelsForRepository(username, repository)
+					Labels = labels.Select(l => l.ConvertToViewModel()).ToList()
 				};
 			return View(viewModel);
 		}
@@ -47,6 +49,15 @@ namespace GitHubLabelInitialiser.Web.Controllers
 		private static bool IsAuthenticated(IUser user)
 		{
 			return user.GitHubAccessToken != null;
+		}
+
+		public async Task<ViewResult> Initialise(string username, string repository, UpdateLabelViewModel viewModel, IUser user)
+		{
+			var labelManager = _labelManagerFactory.Create(user.GitHubAccessToken);
+			var labels = viewModel.Labels.Select(l => l.ConvertToModel()).ToList();
+			await labelManager.IntialiseLabels(username, repository, labels);
+
+			return View();
 		}
 	}
 }

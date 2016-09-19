@@ -86,9 +86,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 		{
 			var user = CreateMockUser();
 			var repoManager = new Mock<IRepositoryManager>();
-			var repoFactory = new Mock<IRepositoryManagerFactory>();
-			repoFactory.Setup(f => f.Create(It.IsAny<GitHubAccessToken>())).Returns(repoManager.Object);
-			var controller = CreateController(repoFactory.Object);
+			var controller = CreateController(repoManager.Object);
 
 			await controller.Index(user.Object);
 
@@ -108,9 +106,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 				};
 			var repoManager = new Mock<IRepositoryManager>();
 			repoManager.Setup(m => m.GetAllForAuthenticatedUser()).ReturnsAsync(expectedRepos);
-			var repoFactory = new Mock<IRepositoryManagerFactory>();
-			repoFactory.Setup(m => m.Create(It.IsAny<GitHubAccessToken>())).Returns(repoManager.Object);
-			var controller = CreateController(repoFactory.Object);
+			var controller = CreateController(repoManager.Object);
 
 			var result = (ViewResult)await controller.Index(user.Object);
 			var model = (ChooseRepositoryViewModel) result.Model;
@@ -153,7 +149,7 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			var labelManager = new Mock<ILabelManager>();
 			labelManager.Setup(m => m.GetLabelsForRepository(username, repository));
 
-			var controller = CreateController(labelManagerFactory: CreateMockLabelManagerFactory(labelManager));
+			var controller = CreateController(labelManager:labelManager.Object);
 
 			controller.Update(username, repository, CreateMockUser().Object);
 
@@ -183,20 +179,87 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			var labelManager = new Mock<ILabelManager>();
 			labelManager.Setup(m => m.GetLabelsForRepository(username, repository)).ReturnsAsync(expectedLabels);
 
-			var controller = CreateController(labelManagerFactory: CreateMockLabelManagerFactory(labelManager));
+			var controller = CreateController(labelManager:labelManager.Object);
 
 			var result = await controller.Update(username, repository, CreateMockUser().Object);
 			var model = (UpdateLabelViewModel) result.Model;
 
-			Assert.That(model.Labels, Is.EqualTo(expectedLabels));
+			AssertLabelsMatch(model.Labels, expectedLabels);
 		}
 
-		private static ILabelManagerFactory CreateMockLabelManagerFactory(Mock<ILabelManager> labelManager)
+		[Test]
+		public async Task Initialise_WhenCallingWithValidModel_ThenReturnViewResult()
 		{
-			var factory = new Mock<ILabelManagerFactory>();
-			factory.Setup(m => m.Create(It.IsAny<GitHubAccessToken>())).Returns(labelManager.Object);
+			var controller = CreateController();
+			var viewModel = CreateValidUpdateLabelViewModel();
+			const string username = "username";
+			const string repository = "repository";
 
-			return factory.Object;
+			var result = await controller.Initialise(username, repository, viewModel, CreateMockUser().Object) as ViewResult;
+
+			Assert.That(result, Is.Not.Null);
+			Assert.That(result.ViewName, Is.EqualTo(""));
+		}
+
+		[Test]
+		public async Task Initialise_WhenCallingWithValidModel_ThenReturnCallLabelManagerIntialiseLabels()
+		{
+			var labelManager = new Mock<ILabelManager>();
+			var viewModel = CreateValidUpdateLabelViewModel();
+			const string username = "username";
+			const string repository = "repository";
+
+			var controller = CreateController(labelManager: labelManager.Object);
+
+			await controller.Initialise(username, repository, viewModel, CreateMockUser().Object);
+
+			labelManager.Verify(f => f.IntialiseLabels(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<List<GitHubLabel>>()), Times.Once);
+		}
+
+		private static UpdateLabelViewModel CreateValidUpdateLabelViewModel()
+		{
+			return new UpdateLabelViewModel
+			{
+				Labels = new List<GitHubLabelViewModel>
+						{
+							new GitHubLabelViewModel
+								{
+									Color = "000000",
+									Name = "Never"
+								}
+						},
+				Username = "username",
+				Repository = "repository"
+			};
+		}
+
+		private static UpdateLabelViewModel CreateInvalidUpdateLabelViewModel()
+		{
+			return new UpdateLabelViewModel
+			{
+				Labels = new List<GitHubLabelViewModel>
+						{
+							new GitHubLabelViewModel()
+						},
+				Username = "username",
+				Repository = "repository"
+			};
+		}
+
+		private static void AssertLabelsMatch(IList<GitHubLabelViewModel> labels, IList<GitHubLabel> expectedLabels)
+		{
+			Assert.That(labels.Count, Is.EqualTo(expectedLabels.Count));
+
+			for (var i = 0; i < labels.Count; i++)
+			{
+				CompareLabels(labels[i], expectedLabels[i]);
+			}
+		}
+
+		private static void CompareLabels(GitHubLabelViewModel viewModel, GitHubLabel model)
+		{
+			Assert.That(viewModel.Color, Is.EqualTo(model.Color));
+			Assert.That(viewModel.Name, Is.EqualTo(model.Name));
 		}
 
 		private static Mock<IUser> CreateMockUser()
@@ -215,14 +278,29 @@ namespace GitHubLabelInitialiser.Web.Test.Controllers
 			return user;
 		}
 
-		private static LabelsController CreateController(IRepositoryManagerFactory repositoryManagerFactory = null, ILabelManagerFactory labelManagerFactory = null)
+		private static LabelsController CreateController(IRepositoryManager repositoryManager = null, ILabelManager labelManager = null)
 		{
 			var mockRepositoryManager = new Mock<IRepositoryManager>();
-			var mockRepositoryManagerFactory = new Mock<IRepositoryManagerFactory>();
-			mockRepositoryManagerFactory.Setup(f => f.Create(It.IsAny<GitHubAccessToken>())).Returns(mockRepositoryManager.Object);
-
 			var mockLabelManager = new Mock<ILabelManager>();
-			return new LabelsController(repositoryManagerFactory ?? mockRepositoryManagerFactory.Object, labelManagerFactory ?? CreateMockLabelManagerFactory(mockLabelManager));
+			mockLabelManager.Setup(m => m.GetLabelsForRepository(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<GitHubLabel>());
+
+			return new LabelsController(CreateMockRepositoryManagerFactory(repositoryManager ?? mockRepositoryManager.Object), CreateMockLabelManagerFactory(labelManager ?? mockLabelManager.Object));
+		}
+
+		private static IRepositoryManagerFactory CreateMockRepositoryManagerFactory(IRepositoryManager repositoryManager)
+		{
+			var factory = new Mock<IRepositoryManagerFactory>();
+			factory.Setup(m => m.Create(It.IsAny<GitHubAccessToken>())).Returns(repositoryManager);
+
+			return factory.Object;
+		}
+
+		private static ILabelManagerFactory CreateMockLabelManagerFactory(ILabelManager labelManager)
+		{
+			var factory = new Mock<ILabelManagerFactory>();
+			factory.Setup(m => m.Create(It.IsAny<GitHubAccessToken>())).Returns(labelManager);
+
+			return factory.Object;
 		}
 	}
 }
