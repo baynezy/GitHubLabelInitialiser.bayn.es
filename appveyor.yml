@@ -7,6 +7,16 @@ test:
 build:
   publish_wap: true
   verbosity: minimal
+environment:
+  GitHubClientSecret:
+    secure: '/RvaiBfnHiVoye0eISqr4E4mk3+8/bJ8TcMcaBTUrZesDKKjF6gfS68kELOYMkCs'
+deploy:
+- provider: WebDeploy
+  server: https://githublabelinitialiser.scm.azurewebsites.net:443/msdeploy.axd?site=GitHubLabelInitialiser
+  website: GitHubLabelInitialiser
+  username: $GitHubLabelInitialiser
+  password:
+    secure: EclcLmkMBIdGta73AF7OEbtuzX5wrzU0LZ9lcQn6KOMWBypCJOzK93lbtO+tgcW/rnNumlqUUMKPbGKs23XGIw==
 notifications:
   - provider: Slack
     auth_token:
