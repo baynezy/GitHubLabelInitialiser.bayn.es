@@ -7,6 +7,8 @@ test:
 build:
   publish_wap: true
   verbosity: minimal
+before_build:
+  - ps: .\ModifyAppSetting.ps1 $env:APPVEYOR_BUILD_FOLDER\GitHubLabelInitialiser.Web\web.config 'GitHubClientSecret' $env:GitHubClientSecret
 environment:
   GitHubClientSecret:
     secure: '/RvaiBfnHiVoye0eISqr4E4mk3+8/bJ8TcMcaBTUrZesDKKjF6gfS68kELOYMkCs'
