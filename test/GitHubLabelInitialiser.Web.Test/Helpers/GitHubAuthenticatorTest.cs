@@ -27,7 +27,7 @@ namespace GitHubLabelInitialiser.Web.Test.Helpers
 			var parameters = new Dictionary<string, string>
 				{
 					{ "client_id", "testClientId" },
-					{ "client_secret", "secret" },
+					{ "client_secret", Environment.GetEnvironmentVariable("GitHubClientSecret") ?? "secret" },
 					{ "code", code },
 					{ "state", state }
 				};
