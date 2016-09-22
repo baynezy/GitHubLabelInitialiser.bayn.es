@@ -19,6 +19,8 @@ deploy:
   username: $GitHubLabelInitialiser
   password:
     secure: EclcLmkMBIdGta73AF7OEbtuzX5wrzU0LZ9lcQn6KOMWBypCJOzK93lbtO+tgcW/rnNumlqUUMKPbGKs23XGIw==
+  on:
+    branch: master
 notifications:
   - provider: Slack
     auth_token:
