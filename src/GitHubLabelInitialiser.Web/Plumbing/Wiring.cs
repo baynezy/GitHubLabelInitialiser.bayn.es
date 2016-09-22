@@ -2,6 +2,7 @@
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using GitHubLabelInitialiser.Web.Helpers;
+using GitHubLabelInitialiser.Web.Models;
 
 namespace GitHubLabelInitialiser.Web.Plumbing
 {
@@ -27,6 +28,9 @@ namespace GitHubLabelInitialiser.Web.Plumbing
 					.LifeStyle.Transient,
 				Component.For<ILabelManagerFactory>()
 					.ImplementedBy<LabelManagerFactory>()
+					.LifeStyle.Transient,
+				Component.For<IMeta>()
+					.ImplementedBy<Meta>()
 					.LifeStyle.Transient
 				);
 		}

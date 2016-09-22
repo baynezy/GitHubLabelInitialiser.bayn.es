@@ -96,6 +96,7 @@
     <Compile Include="Controllers\CallbackControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\LabelsControllerTest.cs" />
+    <Compile Include="Controllers\NavigationControllerTest.cs" />
     <Compile Include="Helpers\ConfigTest.cs" />
     <Compile Include="Helpers\GitHubAuthenticatorTest.cs" />
     <Compile Include="Helpers\GitHubLoginHelperExtensionTest.cs" />

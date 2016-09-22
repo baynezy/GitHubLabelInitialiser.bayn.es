@@ -130,6 +130,7 @@
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LabelsController.cs" />
+    <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -154,7 +155,10 @@
     <Compile Include="Models\GitHubAuthViewModel.cs" />
     <Compile Include="Models\GitHubLabelViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
+    <Compile Include="Models\IMeta.cs" />
     <Compile Include="Models\IUser.cs" />
+    <Compile Include="Models\Meta.cs" />
+    <Compile Include="Models\NavigationFooterViewModel.cs" />
     <Compile Include="Models\UpdateLabelViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Plumbing\ControllerInstaller.cs" />
@@ -209,6 +213,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Labels\Initialise.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Navigation\Footer.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
