@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CallbackControllerTest.cs" />
+    <Compile Include="Controllers\ErrorControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\LabelsControllerTest.cs" />
     <Compile Include="Controllers\NavigationControllerTest.cs" />

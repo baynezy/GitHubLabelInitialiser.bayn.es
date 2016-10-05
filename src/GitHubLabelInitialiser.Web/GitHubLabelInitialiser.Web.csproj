@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="Binders\UserModelBinder.cs" />
     <Compile Include="Controllers\CallbackController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LabelsController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
@@ -216,6 +217,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Navigation\Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Error\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
